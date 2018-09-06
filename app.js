@@ -1,7 +1,6 @@
 /* Import the modules. */
-const http = require('http');
-const fs = require('fs');
 const chalk = require('chalk');
+const express = require('express');
 
 /* Absolute Path to HTML file. */
 const indexFile = `${ __dirname }/index.html`;
@@ -11,26 +10,18 @@ const indexFile = `${ __dirname }/index.html`;
  * [2] The callback function will act like a Listener, it will execute each time
  *     a request is done.
  */
-const app = http.createServer((request, response) => {
-  /**
-   * [1] Read the file as a string.
-   * [2] Send it in the response.
-   * [3] Set the `Status Code` and the `Content-Type`.
-   * [4] Finish the response.
-   */
-  const string = fs.readFileSync(indexFile);
+const app = express();
 
-  response.write(string);
-  response.writeHead(200, {
-    "Content-Type": "text/html"
-  });
+app.get('/', (request, response) => {
+  response.send('It works!');
 });
 
 /**
  * Run and listen the server on an specific port.
  */
+
 app.listen(3000, () => {
-  const formatedMessage = chalk.green('Node server running on PORT: 3000');
+  const formatedMessage = chalk.green('Express server running on PORT: 3000')
 
   console.log(formatedMessage);
 });
