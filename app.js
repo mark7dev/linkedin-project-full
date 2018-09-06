@@ -13,7 +13,7 @@ const indexFile = `${ __dirname }/index.html`;
 const app = express();
 
 app.get('/', (request, response) => {
-  response.send('It works!');
+  response.sendFile(indexFile);
 });
 
 /**
