@@ -13,6 +13,16 @@ const app = express();
 // Change PORT to "xxxx" (jason) if this port is occuped then run on 3000
 const PORT = process.env.PORT || 3000;
 
+/**
+ * [1] Views Configuration
+ *
+ * [1] Set the `views` variable and pass it the relative path
+ * [2] Configure the templage engine using `pug`
+ */
+app.set('views', './src/views')
+app.set('view engine', 'pug');
+
+
 // Middleware
 app.use(logger('dev'));
 // Define public like static
@@ -25,6 +35,15 @@ app.use('/static', express.static('public'));
 app.get('/api', (request, response) => {
   response.send('LinkedIn REST API')
   .status(200);
+});
+
+app.get('/', (request, response) => {
+  response.render('main', 
+  // OBJETO
+  {
+    title: 'LinkedIn REST API',
+    subtitle: 'API Reference'
+  });
 });
 
 
@@ -66,24 +85,24 @@ app.use((request, response) => {
  * `app.use` it’s called every time a request is sent to the
  * server.
  */
-app.use((error, request, response, next) => {
-  const body = error.error;
-  const STATUS_CODE = body.status || 500;
-  const ERROR_505 = body.message || '500. Internal Server Error :(';
+// app.use((error, request, response, next) => {
+//   const body = error.error;
+//   const STATUS_CODE = body.status || 500;
+//   const ERROR_505 = body.message || '500. Internal Server Error :(';
 
-  const formatedMessage = JSON.stringify(error, null, 2);
+//   const formatedMessage = JSON.stringify(error, null, 2);
 
-  response
-    .status(STATUS_CODE)
-    .json({
-      error: {
-        message: ERROR_505,
-        status: STATUS_CODE
-      }
-    });
+//   response
+//     .status(STATUS_CODE)
+//     .json({
+//       error: {
+//         message: ERROR_505,
+//         status: STATUS_CODE
+//       }
+//     });
 
-  console.log(chalk.red(formatedMessage));
-});
+//   console.log(chalk.red(formatedMessage));
+// });
 
 
 // OTHER WAY
