@@ -3,10 +3,6 @@ const chalk = require('chalk');
 const express = require('express');
 const logger = require('morgan');
 
-/* Absolute Path to HTML file. */
-const indexFile = `${ __dirname }/index.html`;
-
-
 /**
  * [1] Create and instantiate the Node server.
  * [2] The callback function will act like a Listener, it will execute each time
@@ -19,12 +15,18 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(logger('dev'));
+// Define public like static
+app.use('/static', express.static('public'));
 
 
 // Route
-app.get('/', (request, response) => {
-  response.sendFile(indexFile);
+// * `app.use` it’s called every time a request is sent to the
+// * server.
+app.get('/api', (request, response) => {
+  response.send('LinkedIn REST API')
+  .status(200);
 });
+
 
 
 //Error 404
