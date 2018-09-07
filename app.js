@@ -1,6 +1,7 @@
 /* Import the modules. */
 const chalk = require('chalk');
 const express = require('express');
+const logger = require('morgan');
 
 /* Absolute Path to HTML file. */
 const indexFile = `${ __dirname }/index.html`;
@@ -13,9 +14,14 @@ const indexFile = `${ __dirname }/index.html`;
  */
 const app = express();
 
-// Change PORT to 8000 (jason) if this port is occuped then run on 3000
+// Change PORT to "xxxx" (jason) if this port is occuped then run on 3000
 const PORT = process.env.PORT || 3000;
 
+// Middleware
+app.use(logger('dev'));
+
+
+// Route
 app.get('/', (request, response) => {
   response.sendFile(indexFile);
 });
@@ -25,7 +31,7 @@ app.get('/', (request, response) => {
  */
 
 app.listen(PORT, () => {
-  const formatedMessage = chalk.green(`Node server running on PORT: ${ PORT }`);
+  const formatedMessage = chalk.green(`Express server running on PORT: ${ PORT }`);
 
   console.log(formatedMessage);
 });
