@@ -2,6 +2,7 @@
 const chalk = require('chalk');
 const express = require('express');
 const logger = require('morgan');
+const api =require('./src/routes/api');
 
 /**
  * [1] Create and instantiate the Node server.
@@ -45,6 +46,8 @@ app.get('/', (request, response) => {
     subtitle: 'API Reference'
   });
 });
+
+app.use('/api/v1', api);
 
 
 
