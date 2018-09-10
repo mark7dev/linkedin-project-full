@@ -30,6 +30,14 @@ app.use(logger('dev'));
 app.use('/static', express.static('public'));
 
 
+//Setting type of data request like parse body request
+app.use(express.urlencoded({
+  extended: true
+}))
+
+// Parse body request
+app.use(express.json());
+
 // Route
 // * `app.use` it’s called every time a request is sent to the
 // * server.
@@ -46,6 +54,47 @@ app.get('/', (request, response) => {
     subtitle: 'API Reference'
   });
 });
+
+//Setting CORS
+app.use((request, response, next) => {
+  response.header('Accsess-Control-Allow-Origin', '*');
+  response.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+
+  //If someone ask for the Methods to the end-point
+  if (request.method === 'OPTIONS') {
+    response.header(
+      'Access-Control-Allow-Methods',
+      'GET, POST, PUT, DELETE'
+    );
+    response.send(200);
+  }
+
+  next();
+});
+
+//Other way with Express
+// app.use((request, response, next) => {
+//   response.header('Accsess-Control-Allow-Origin', '*');
+//   response.header(
+//     'Access-Control-Allow-Headers',
+//     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+//   );
+
+//   next();
+// });
+
+// app.options('*', (request, response, next) => {
+//   response.header(
+//     'Access-Control-Allow-Headers',
+//     'GET, POST, PUT, DELETE'
+//   );
+//   response.send(200);
+
+//   next();
+// });
 
 app.use('/api/v1', api);
 

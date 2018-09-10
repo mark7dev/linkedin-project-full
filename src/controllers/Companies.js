@@ -1,7 +1,7 @@
 const companies = require('../../companies.json');
 
 const Controller = {
-    index: (require, response) => {
+    index: (request, response) => {
         response
         .status(200)
         .json({
@@ -9,13 +9,34 @@ const Controller = {
         });
     },
 
-    id: (require, response) => {
+
+    //Petición GET
+    id: (request, response) => {
         const theCompany = companies.data.filter(item => {
-            return item.id === parseInt(require.params.id);
+            return item.id === parseInt(request.params.id);
         });
+        if(theCompany.length){
+            response
+              .status(200)
+              .json({
+                data: theCompany[0]
+              })
+        } else {
         response
-        .status(200)
-        .json( { theCompany });
+            .json({
+                message: 'Not Company Found'
+            })
+        } 
+    },
+
+
+    //POST
+    create: (request, response) => {
+        response
+        .json({
+            type: 'POST /companies',
+            data: request.body
+        })
     }
 }
 
