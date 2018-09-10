@@ -88,24 +88,24 @@ app.use((request, response) => {
  * `app.use` it’s called every time a request is sent to the
  * server.
  */
-// app.use((error, request, response, next) => {
-//   const body = error.error;
-//   const STATUS_CODE = body.status || 500;
-//   const ERROR_505 = body.message || '500. Internal Server Error :(';
+app.use((error, request, response, next) => {
+  const body = error.error;
+  const STATUS_CODE = body.status || 500;
+  const ERROR_505 = body.message || '500. Internal Server Error :(';
 
-//   const formatedMessage = JSON.stringify(error, null, 2);
+  const formatedMessage = JSON.stringify(error, null, 2);
 
-//   response
-//     .status(STATUS_CODE)
-//     .json({
-//       error: {
-//         message: ERROR_505,
-//         status: STATUS_CODE
-//       }
-//     });
+  response
+    .status(STATUS_CODE)
+    .json({
+      error: {
+        message: ERROR_505,
+        status: STATUS_CODE
+      }
+    });
 
-//   console.log(chalk.red(formatedMessage));
-// });
+  console.log(chalk.red(formatedMessage));
+});
 
 
 // OTHER WAY
